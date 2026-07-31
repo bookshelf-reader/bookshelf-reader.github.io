@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BookShelf — Support</title>
+<meta name="description" content="Support and help for BookShelf — read books, tap any word for instant translation and AI grammar explanations, and build your vocabulary." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --emerald: #3FB984;
+    --emerald-deep: #1F6F52;
+    --mint: #A8E6C9;
+    --ink: #0F1F1A;
+    --cream: #F5F1E8;
+    --bg: #0B1512;
+    --bg-soft: #0F1F1A;
+    --card: #13241E;
+    --line: rgba(63, 185, 132, 0.16);
+    --text: #E8F1EC;
+    --text-dim: #9DB3A9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Ambient glow background */
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glow-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(63,185,132,0.25), transparent 70%); top: -200px; right: -150px; }
+  .glow-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(31,111,82,0.30), transparent 70%); bottom: -150px; left: -200px; }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 96px 0 64px;
+  }
+
+  .logo {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 28px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, var(--emerald), var(--emerald-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 50px -12px rgba(63,185,132,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
+    position: relative;
+  }
+  .logo svg { width: 44px; height: 44px; }
+
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    background: rgba(63,185,132,0.10);
+    border: 1px solid var(--line);
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: clamp(34px, 6vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 18px;
+  }
+  h1 .accent { color: var(--emerald); }
+
+  .subtitle {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Primary contact card */
+  .contact-card {
+    background: linear-gradient(160deg, var(--card), var(--bg-soft));
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 40px 36px;
+    text-align: center;
+    margin-bottom: 64px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .contact-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .contact-card p {
+    color: var(--text-dim);
+    margin-bottom: 26px;
+    font-size: 15px;
+  }
+  .mail-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(145deg, var(--emerald), var(--emerald-deep));
+    color: #04140D;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 14px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 12px 30px -8px rgba(63,185,132,0.5);
+  }
+  .mail-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -8px rgba(63,185,132,0.6); }
+  .mail-btn svg { width: 20px; height: 20px; }
+  .reply-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* Section heading */
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  /* FAQ */
+  .faq { margin-bottom: 72px; }
+  details {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  details[open] { border-color: rgba(63,185,132,0.4); }
+  summary {
+    cursor: pointer;
+    padding: 20px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.2s ease;
+  }
+  summary:hover { color: var(--emerald); }
+  summary::-webkit-details-marker { display: none; }
+  .chev {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    background: rgba(63,185,132,0.12);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.25s ease, background 0.2s ease;
+  }
+  details[open] .chev { transform: rotate(180deg); background: rgba(63,185,132,0.25); }
+  .chev svg { width: 12px; height: 12px; }
+  .faq-body {
+    padding: 0 24px 22px;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .faq-body a { color: var(--emerald); text-decoration: none; }
+  .faq-body a:hover { text-decoration: underline; }
+  .faq-body strong { color: var(--text); font-weight: 600; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 60px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  footer .links { margin-bottom: 18px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  footer .links a { color: var(--text-dim); text-decoration: none; transition: color 0.2s ease; }
+  footer .links a:hover { color: var(--emerald); }
+  footer .copy { font-size: 13px; opacity: 0.7; }
+
+  @media (max-width: 520px) {
+    header { padding: 64px 0 44px; }
+    .contact-card { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 5.5C4 4.67 4.67 4 5.5 4H11V20H5.5C4.67 20 4 19.33 4 18.5V5.5Z" fill="#04140D" fill-opacity="0.25"/>
+          <path d="M20 5.5C20 4.67 19.33 4 18.5 4H13V20H18.5C19.33 20 20 19.33 20 18.5V5.5Z" fill="#04140D" fill-opacity="0.15"/>
+          <path d="M5.5 3.25H11C11.55 3.25 12 3.7 12 4.25V19.75C12 20.16 11.66 20.5 11.25 20.5C11.05 20.5 10.86 20.42 10.72 20.28C10.4 19.96 9.97 19.75 9.5 19.75H5.5C4.26 19.75 3.25 18.74 3.25 17.5V5.5C3.25 4.26 4.26 3.25 5.5 3.25Z" stroke="#04140D" stroke-width="1.4" stroke-linejoin="round"/>
+          <path d="M18.5 3.25H13C12.45 3.25 12 3.7 12 4.25V19.75C12 20.16 12.34 20.5 12.75 20.5C12.95 20.5 13.14 20.42 13.28 20.28C13.6 19.96 14.03 19.75 14.5 19.75H18.5C19.74 19.75 20.75 18.74 20.75 17.5V5.5C20.75 4.26 19.74 3.25 18.5 3.25Z" stroke="#04140D" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="badge">Support Center</div>
+      <h1>How can we<br><span class="accent">help you?</span></h1>
+      <p class="subtitle">Questions, feedback, or something not working right? We're here — and we read every message.</p>
+    </header>
+
+    <div class="contact-card">
+      <h2>Get in touch</h2>
+      <p>The fastest way to reach us is by email. Tell us what's going on and we'll get back to you.</p>
+      <a class="mail-btn" href="mailto:bookshelf.support@gmail.com?subject=BookShelf%20Support">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7L12 13L21 7" stroke="#04140D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#04140D" stroke-width="1.8"/>
+        </svg>
+        bookshelf.support@gmail.com
+      </a>
+      <p class="reply-note">We usually reply within 1–2 business days.</p>
+    </div>
+
+    <div class="faq">
+      <div class="section-title">Frequently Asked</div>
+
+      <details>
+        <summary>What is BookShelf? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">BookShelf is a reader for language learners. Import your own EPUB books, tap any word for an instant translation and an AI-powered grammar explanation, then save words to your personal vocabulary and export them to Anki, Quizlet, or CSV.</div>
+      </details>
+
+      <details>
+        <summary>How do I add a book? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">Open the Library tab and import any <strong>EPUB</strong> file from your device or cloud storage. Once imported, tap the book to start reading. Tapping a word while reading opens the translation.</div>
+      </details>
+
+      <details>
+        <summary>What does Pro include? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">Pro unlocks <strong>unlimited AI translations</strong>, advanced grammar explanations, and unlimited cloud vocabulary sync. It's available as a monthly or annual subscription, and the annual plan includes a free trial.</div>
+      </details>
+
+      <details>
+        <summary>How do I restore a purchase? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">If you've already subscribed and reinstalled the app or switched devices, open the subscription screen and tap <strong>Restore Purchase</strong>. Your Pro access is tied to your Apple ID and will be restored without paying again.</div>
+      </details>
+
+      <details>
+        <summary>How do I cancel my subscription? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">Subscriptions are managed through your Apple ID. Go to <strong>Settings → your name → Subscriptions</strong> on your iPhone, select BookShelf, and cancel there. You'll keep Pro until the end of the current billing period.</div>
+      </details>
+
+      <details>
+        <summary>How do I export my vocabulary? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">Open the <strong>My Words</strong> tab and use the export option to send your saved words to <strong>Anki</strong>, <strong>Quizlet</strong>, or a <strong>CSV</strong> file you can use anywhere.</div>
+      </details>
+
+      <details>
+        <summary>How do I delete my account? <span class="chev"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="faq-body">Go to <strong>Settings → Delete Account</strong> inside the app. This permanently removes your account and associated data. If you need help, email us any time.</div>
+      </details>
+    </div>
+
+    <footer>
+      <div class="links">
+        <a href="mailto:bookshelf.support@gmail.com">Email</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="copy">© 2026 BookShelf. All rights reserved.</div>
+    </footer>
+  </div>
+</body>
+</html>
