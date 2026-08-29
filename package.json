@@ -1,0 +1,18 @@
+{
+  "name": "bookshelf-catalog-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "One-time, local-only tool that builds BookShelf's static free-book catalog.json from Project Gutenberg's official RDF metadata dump. Never runs on a server, never touches Firebase, never talks to Gutendex or scrapes gutenberg.org — see README.md.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generate": "node src/index.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^5.7.0",
+    "tar-stream": "^3.1.7",
+    "unbzip2-stream": "^1.4.3"
+  }
+}
